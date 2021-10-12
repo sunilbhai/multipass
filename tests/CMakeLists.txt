@@ -17,8 +17,19 @@ set (CMAKE_AUTOMOC ON)
 
 include(c_mock_defines.cmake)
 
-set(MULTIPASS_GMOCK_DIR ${CMAKE_SOURCE_DIR}/3rd-party/grpc/third_party/googletest/googlemock)
-set(MULTIPASS_GTEST_DIR ${CMAKE_SOURCE_DIR}/3rd-party/grpc/third_party/googletest/googletest)
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
+
+set(MULTIPASS_GTEST_DIR ${CMAKE_BINARY_DIR}/3rd-party/googletest)
+
+FetchContent_Declare(gtest
+  SOURCE_DIR ${MULTIPASS_GTEST_DIR}
+  GIT_REPOSITORY https://github.com/google/googletest
+  GIT_TAG master
+  GIT_SHALLOW TRUE
+  GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable(gtest)
 
 add_executable(multipass_tests
   common.cpp
@@ -88,18 +99,18 @@ add_executable(multipass_tests
   test_with_mocked_bin_path.cpp
   test_workflow_provider.cpp
 
-  ${MULTIPASS_GMOCK_DIR}/src/gmock-all.cc
-  ${MULTIPASS_GTEST_DIR}/src/gtest-all.cc
+  ${MULTIPASS_GTEST_DIR}/googlemock/src/gmock-all.cc
+  ${MULTIPASS_GTEST_DIR}/googletest/src/gtest-all.cc
 )
 
 target_include_directories(multipass_tests
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_SOURCE_DIR}/src
   PRIVATE ${CMAKE_SOURCE_DIR}/src/platform/backends
-  PRIVATE ${MULTIPASS_GTEST_DIR}
-  PRIVATE ${MULTIPASS_GTEST_DIR}/include
-  PRIVATE ${MULTIPASS_GMOCK_DIR}
-  PRIVATE ${MULTIPASS_GMOCK_DIR}/include
+  PRIVATE ${MULTIPASS_GTEST_DIR}/googletest
+  PRIVATE ${MULTIPASS_GTEST_DIR}/googletest/include
+  PRIVATE ${MULTIPASS_GTEST_DIR}/googlemock
+  PRIVATE ${MULTIPASS_GTEST_DIR}/googlemock/include
 )
 
 add_definitions(-DWITH_SERVER)
