@@ -65,6 +65,7 @@ jobs:
 
     strategy:
       matrix: ${{ fromJSON(needs.GetMatrix.outputs.matrix) }}
+      fail-fast: false
 
     env:
       TESTFLINGER_FILE: testflinger-${{ matrix.os }}-${{ matrix.driver }}.yaml
