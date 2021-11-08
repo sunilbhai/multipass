@@ -96,7 +96,7 @@ private:
 TEST_F(TestPersistentSettingsHandler, getReadsUtf8)
 {
     const auto key = "asdf";
-    EXPECT_CALL(*mock_qsettings, setIniCodec(StrEq("UTF-8"))).Times(1);
+    EXPECT_CALL(*mock_qsettings, setIniCodec(StrEq("UTF-8")));
 
     inject_mock_qsettings();
 
@@ -106,7 +106,7 @@ TEST_F(TestPersistentSettingsHandler, getReadsUtf8)
 TEST_F(TestPersistentSettingsHandler, setWritesUtf8)
 {
     const auto key = "a.key";
-    EXPECT_CALL(*mock_qsettings, setIniCodec(StrEq("UTF-8"))).Times(1);
+    EXPECT_CALL(*mock_qsettings, setIniCodec(StrEq("UTF-8")));
 
     inject_mock_qsettings();
 
@@ -165,7 +165,7 @@ TEST_P(TestPersistentSettingsReadWriteError, setThrowsOnFileWriteError)
 
     {
         InSequence seq;
-        EXPECT_CALL(*mock_qsettings, sync).Times(1); // needs to flush to ensure failure to write
+        EXPECT_CALL(*mock_qsettings, sync); // needs to flush to ensure failure to write
         EXPECT_CALL(*mock_qsettings, status).WillOnce(Return(status));
     }
 
@@ -226,7 +226,7 @@ TEST_F(TestPersistentSettingsHandler, setRecordsProvidedSetting)
 {
     const auto key = "name.a.key", val = "and a value";
     const auto handler = make_handler(key);
-    EXPECT_CALL(*mock_qsettings, setValue(Eq(key), Eq(val))).Times(1);
+    EXPECT_CALL(*mock_qsettings, setValue(Eq(key), Eq(val)));
 
     inject_mock_qsettings();
 
