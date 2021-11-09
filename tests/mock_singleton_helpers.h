@@ -61,7 +61,7 @@ public:                                                                         
 
 namespace multipass::test
 {
-
+// TODO@ricab review what's no longer needed
 template <typename ConcreteMock, template <typename /*MockClass*/> typename MockCharacter = ::testing::NaggyMock>
 class MockSingletonHelper : public ::testing::Environment
 {
